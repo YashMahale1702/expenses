@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { ExpenseItem } from './ExpenseItem';
 import ExpensesFilter from './ExpensesFilter';
+import ExpensesChart from './ExpensesChart';
 import './Expenses.scss';
 import Card from '../UI/Card';
 
 export const Expenses = (props) => {
-    const [filterValue, setfilterValue] = useState('2020');
+    const [filterValue, setfilterValue] = useState('2021');
 
     const saveOptionHandler = (filterOptionPassed) => {
         // set the new filter value
@@ -13,7 +14,6 @@ export const Expenses = (props) => {
     };
 
     const filteredExpense = props.items.filter((item) => {
-        console.log(item.date.getFullYear().toString());
         return item.date.getFullYear().toString() === filterValue;
     });
 
@@ -24,6 +24,7 @@ export const Expenses = (props) => {
                     selectedYear={filterValue}
                     onSaveOption={saveOptionHandler}
                 />
+                <ExpensesChart expenses={filteredExpense} />
                 {filteredExpense.length === 0 ? (
                     <h1 className='expenses-h1'>No expenses found</h1>
                 ) : (
