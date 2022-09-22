@@ -1,13 +1,19 @@
 import './App.scss';
+import { useState } from 'react';
 import { Expenses } from './components/Expenses/Expenses';
-import { expenses } from './data/Data';
+import { expensesData } from './data/Data';
 import NewExpense from './components/NewExpense/NewExpense';
 
-
 function App() {
+    const [expenses, setExpenses] = useState(expensesData);
+    // const [expenses, setExpenses] = useState([]);
 
-    const addExpenseHandler = (expenseData) => {
-        console.log('From app.js, expense data');
+    const addExpenseHandler = (newExpenseData) => {
+        console.log(newExpenseData);
+
+        setExpenses((oldExpense) => {
+            return [newExpenseData, ...oldExpense];
+        });
     };
     return (
         <div className='App'>

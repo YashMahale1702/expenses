@@ -7,6 +7,7 @@ const ExpenseForm = (props) => {
     const [enteredDate, setenteredDate] = useState('');
 
 
+
     const titleChangeHandler = (event) => {
         setenteredTitle(event.target.value);
     };
@@ -14,29 +15,39 @@ const ExpenseForm = (props) => {
         setenteredAmount(event.target.value);
     };
     const dateChangeHandler = (event) => {
-        console.log(event.target.value);
         setenteredDate(event.target.value);
     };
 
     const submitHandler = (event) => {
         event.preventDefault();
 
-        const expenseData = {
-            title: enteredTitle,
-            amount: enteredAmount,
-            date: new Date(enteredDate)
-        };
+        if (enteredAmount && enteredDate && enteredTitle) {
+            const expenseData = {
+                title: enteredTitle,
+                amount: enteredAmount,
+                date: new Date(enteredDate)
+            };
 
-        // handler of NewExpense
-        props.onSaveExpenseData(expenseData);
+            // handler of NewExpense
+            props.onSaveExpenseData(expenseData);
 
-        // clear input 
-        setenteredAmount('');
-        setenteredDate('');
-        setenteredTitle('');
+            // clear input 
+            setenteredAmount('');
+            setenteredDate('');
+            setenteredTitle('');
+        } else {
+            alert("Fill all the fields");
+        }
     };
 
+    const cancelHandler = () => {
+        props.onCancelButtonClick();
+    };
+
+
+
     return (
+
         <form onSubmit={submitHandler}>
             <div className="new-expense__controls">
                 <div className="new-expense__control">
@@ -53,6 +64,7 @@ const ExpenseForm = (props) => {
                 </div>
             </div>
             <div className="new-expense__actions">
+                <button type='button' onClick={cancelHandler}>Cancel</button>
                 <button type='submit'>Add Expense</button>
             </div>
         </form>
